@@ -1,6 +1,20 @@
 name: Hello world
 
-on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      build-target:
+        description: 'The target stage in docker build, "production" is the build-stage.'
+        required: true
+        # on develop branch we use as default 'production'; For releases we should use 'demo' and push this release to a server that can host the fela-webcore-demo.
+        default: 'production'
+        type: choice
+        options:
+          - demo
+          - production
+          - frontend
+          - backend
+          - share
 
 jobs:
   hello-world:
@@ -9,3 +23,7 @@ jobs:
       - name: Hello world
         run: |
           echo "Hello world"
+      - name: Set env
+        run: echo "GITHUB_SHA_SHORT=${{ github.event.inputs.version }}"
+      - name: Test
+        run: echo $GITHUB_SHA_SHORT
