@@ -24,6 +24,6 @@ jobs:
         run: |
           echo "Hello world"
       - name: Set env
-        run: echo "GITHUB_SHA_SHORT=$([ ${{ github.event.inputs.build-target }} != production ] && ${{ github.event.inputs.build-target }} )"
+        run: echo "GITHUB_SHA_SHORT=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && '${{ github.event.inputs.build-target }}' )"
       - name: Test
         run: echo $GITHUB_SHA_SHORT
