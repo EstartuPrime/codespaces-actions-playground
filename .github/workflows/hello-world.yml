@@ -29,22 +29,19 @@ jobs:
           echo "Hello world"
       - name: With output
         id: set-suffix
-        run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_OUTPUT
-      - name: With env
-        id: set-env
-        run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
-      - name: Test 1 - outputs
-        run: echo ${{ steps.set-suffix.outputs.image-suffix }}
-      - name: Test 2 - env
-        run: echo ${{ env.image-suffix }}
-      - name: Github-SHA
-        run: echo ${{ github.sha }}
-      - name: Github-SHA-Short
+        run: |
+          echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_OUTPUT
+          echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
+      - name: Test suffix
+        run: |
+          echo "in out:" ${{ steps.set-suffix.outputs.image-suffix }}
+          echo "in env:" ${{ env.image-suffix }}
+      - name: GitHub-SHA-short
         id: sha-short
         run: |
           echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT
           echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
-      - name: Test 3 - ouputs
-        run: echo ${{ steps.sha-short.outputs.sha_short }}
-      - name: Test 4 - env
-        run: echo ${{ env.sha_short }}
+      - name: Test SHA-short
+        run: |
+          echo "in out: ${{ steps.sha-short.outputs.sha_short }}"
+          echo "in env: ${{ env.sha_short }}"
