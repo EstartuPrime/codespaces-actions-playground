@@ -24,6 +24,7 @@ jobs:
         run: |
           echo "Hello world"
       - name: Set env
-        run: echo "GITHUB_SHA_SHORT=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
+        id: set-suffix
+        run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_OUTPUT
       - name: Test
-        run: echo $GITHUB_SHA_SHORT
+        run: echo ${{ steps.set-suffix.outputs.image-suffix }}
