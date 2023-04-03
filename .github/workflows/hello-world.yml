@@ -31,7 +31,12 @@ jobs:
         run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
       - name: Test1
         run: echo ${{ steps.set-suffix.outputs.image-suffix }}
-      - name: Test1
+      - name: Test2
         run: echo ${{ env.image-suffix }}
       - name: Github-SHA
         run: echo ${{ github.sha }}
+      - name: Github-SHA-Short
+        id: sha-short
+        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Test2
+        run: echo ${{ steps.sha-short.outputs.sha_short }}
