@@ -37,6 +37,8 @@ jobs:
         run: echo ${{ github.sha }}
       - name: Github-SHA-Short
         id: sha-short
-        run: echo "sha_short=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
+        run: |
+          echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT
+          echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
       - name: Test3
         run: echo ${{ steps.sha-short.outputs.sha_short }}
