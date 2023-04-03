@@ -7,7 +7,7 @@ on:
         description: 'The target stage in docker build, "production" is the build-stage.'
         required: true
         # on develop branch we use as default 'production'; For releases we should use 'demo' and push this release to a server that can host the fela-webcore-demo.
-        default: 'production'
+        default: 'demo'
         type: choice
         options:
           - demo
@@ -15,6 +15,10 @@ on:
           - frontend
           - backend
           - share
+
+env:
+  SOME_ENV: 1
+  ANOTHER_ENV: Hi
 
 jobs:
   hello-world:
@@ -29,9 +33,9 @@ jobs:
       - name: With env
         id: set-env
         run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
-      - name: Test1
+      - name: Test 1 - outputs
         run: echo ${{ steps.set-suffix.outputs.image-suffix }}
-      - name: Test2
+      - name: Test 2 - env
         run: echo ${{ env.image-suffix }}
       - name: Github-SHA
         run: echo ${{ github.sha }}
@@ -40,5 +44,7 @@ jobs:
         run: |
           echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT
           echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
-      - name: Test3
+      - name: Test 3 - ouputs
         run: echo ${{ steps.sha-short.outputs.sha_short }}
+      - name: Test 4 - env
+        run: echo ${{ env.sha_short }}
