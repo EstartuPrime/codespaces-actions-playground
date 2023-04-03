@@ -23,10 +23,15 @@ jobs:
       - name: Hello world
         run: |
           echo "Hello world"
-      - name: Set env
+      - name: With output
         id: set-suffix
         run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_OUTPUT
-      - name: Test
+      - name: With env
+        id: set-env
+        run: echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
+      - name: Test1
         run: echo ${{ steps.set-suffix.outputs.image-suffix }}
+      - name: Test1
+        run: echo ${{ env.image-suffix }}
       - name: Github-SHA
         run: echo ${{ github.sha }}
