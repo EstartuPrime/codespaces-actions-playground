@@ -24,29 +24,37 @@ jobs:
   hello-world:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
       - name: Hello world
         run: |
           echo "Hello world"
+
       - name: With output
         id: set-suffix
         run: |
           echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_OUTPUT
           echo "image-suffix=$([ '${{ github.event.inputs.build-target }}' != 'production' ] && echo '-${{ github.event.inputs.build-target }}' )" >> $GITHUB_ENV
+
       - name: Test suffix
         run: |
           echo "in out:" ${{ steps.set-suffix.outputs.image-suffix }}
           echo "in env:" ${{ env.image-suffix }}
+
       - name: GitHub-SHA-short
         id: sha-short
         run: |
           echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT
           echo "sha_short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
+
       - name: Test SHA-short
         run: |
           echo "in out: ${{ steps.sha-short.outputs.sha_short }}"
           echo "in env: ${{ env.sha_short }}"
+
       - name: reusable call
         id: reusecall
-        uses: ./sha-short.yml
+        uses: ./.github/workflows/sha-short.yml
       - name: reuseable output
         run: echo ${{ needs.reusablecall.outputs.sha-short }}
