@@ -1,0 +1,19 @@
+name: SHA-short crator
+
+on:
+  workflow_call:
+    outputs:
+      sha-short:
+        description: "The first 8 characters of github.sha"
+        value: ${{ jobs.sha-short.outputs.sha-short }}
+
+jobs:
+  sha-short:
+    name: Generate the short SHA
+    runs-on: ubuntu-latest
+    outputs:
+      sha-short: ${{ steps.first.sha-short }}
+    steps:
+      - name: first
+        run: |
+          echo "sha-short=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_OUTPUT

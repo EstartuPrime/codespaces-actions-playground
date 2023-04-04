@@ -45,3 +45,8 @@ jobs:
         run: |
           echo "in out: ${{ steps.sha-short.outputs.sha_short }}"
           echo "in env: ${{ env.sha_short }}"
+      - name: reusable call
+        id: reusecall
+        uses: .github/workflows/sha-short.yml
+      - name: reuseable output
+        run: echo ${{ needs.reusablecall.outputs.sha-short }}
