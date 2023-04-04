@@ -1,13 +1,13 @@
 name: Hello world
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       build-target:
         description: 'The target stage in docker build, "production" is the build-stage.'
         required: true
         # on develop branch we use as default 'production'; For releases we should use 'demo' and push this release to a server that can host the fela-webcore-demo.
-        default: 'demo'
+        default: "demo"
         type: choice
         options:
           - demo
@@ -49,6 +49,10 @@ jobs:
         run: |
           echo "in out: ${{ steps.sha-short.outputs.sha_short }}"
           echo "in env: ${{ env.sha_short }}"
+
+  jobs:
+    call_reusable_workflow:
+      uses: ${{ github.repository }}/.github/workflows/reusable-workflow.yml@main
 
   call_reusable:
     runs-on: ubuntu-latest
