@@ -54,11 +54,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
+        id: checkout
         uses: actions/checkout@v3
+      - name: test checkout
+        run: echo $(ls -la ./.github/workflows)
 
       - name: reusable call
         id: reusecall
-        uses: ./.github/workflows/sha-short.yml@main
+        uses: ./.github/workflows/sha-short.yml
 
       - name: reuseable output
         run: echo ${{ steps.reusecall.outputs.sha-short }}
