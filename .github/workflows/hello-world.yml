@@ -55,6 +55,6 @@ jobs:
 
       - name: reusable call
         id: reusecall
-        uses: EstartuPrime/codespaces-actions-playground/.github/workflows/sha-short.yml
+        uses: EstartuPrime/codespaces-actions-playground/.github/workflows/sha-short.yml@main
       - name: reuseable output
         run: echo ${{ needs.reusablecall.outputs.sha-short }}
