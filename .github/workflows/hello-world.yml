@@ -64,5 +64,5 @@ jobs:
     steps:
       - name: compare sha
         run: |
-          echo "reusable sha-short: " ${{ needs.call_reusable.outputs.sha-short }}
-          echo "from env: " ${{ needs.hello-world.outputs.sha-short }}
+          echo "reusable sha-short: " ${{ needs.call_reusable.outputs.sha-short }} # somethings wrong
+          echo "internal job: " ${{ needs.hello-world.outputs.sha-short }} # check, works
