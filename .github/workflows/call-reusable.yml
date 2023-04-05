@@ -2,13 +2,13 @@ on:
   push:
     branches:
       - main
+jobs:
+  call_reusable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: reusable call
+        id: reusecall
+        uses: ${{ github.repository }}/.github/workflows/reusable-workflow.yml@main
 
-call_reusable:
-  runs-on: ubuntu-latest
-  steps:
-    - name: reusable call
-      id: reusecall
-      uses: ${{ github.repository }}/.github/workflows/reusable-workflow.yml@main
-
-    - name: reuseable output
-      run: echo ${{ steps.reusecall.outputs.sha-short }}
+      - name: reuseable output
+        run: echo ${{ steps.reusecall.outputs.sha-short }}
