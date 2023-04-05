@@ -41,4 +41,9 @@ To a working workflow as i expect. It works! (when the needs are fullfilled).
 
 ## now check the parsed values
 
-Good case. bad case without rc in the branch and merge name.
+Good case works.
+Bad case without rc in the branch and merge name also works
+
+## final test with two jobs
+
+We have to check if the second job doesnt start when the if statement of the first job doesnt fit.
