@@ -43,3 +43,7 @@ jobs:
         run: |
           echo "test: ${{ steps.rcvalue.outputs.rc_value }}"
           echo "RC_VALUE=$([ -z '${{ steps.rcvalue.outputs.rc_value }}' ] && echo ${{ steps.rcversion.outputs.rc_value }} )" >> $GITHUB_ENV
+
+      - name: Final Test
+        run: |
+          echo "the final version can looks like this: ${{ steps.rcversion.outputs.rc_version }}-${{ steps.rcvalue.outputs.rc_value }}"
