@@ -6,9 +6,12 @@ jobs:
   call_reusable:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: reusable call
         id: reusecall
-        uses: ${{ github.repository }}/.github/workflows/reusable-workflow.yml@main
+        uses: ./.github/workflows/reusable-workflow.yml
 
       - name: reuseable output
         run: echo ${{ steps.reusecall.outputs.sha-short }}
