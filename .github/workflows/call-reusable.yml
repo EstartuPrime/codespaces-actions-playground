@@ -1,19 +1,21 @@
+name: Call Reusable Workflow
+
 on:
   push:
     branches:
       - main
+
 jobs:
   call_reusable:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: reusable call
-        id: reusecall
-        uses: ${{ github.repository }}/.github/workflows/sha-short.yml@main
+      - name: Call reusable workflow
+        uses: ./.github/workflows/sha-short.yml
         with:
           repository: ${{ github.repository }}
 
-      - name: reuseable output
-        run: echo ${{ steps.reusecall.outputs.sha-short }}
+      - name: Reusable output
+        run: echo ${{ steps.sha_short.outputs.sha_short }}
