@@ -12,6 +12,8 @@ jobs:
       - name: reusable call
         id: reusecall
         uses: ${{ github.repository }}/.github/workflows/sha-short.yml@main
+        with:
+          repository: ${{ github.repository }}
 
       - name: reuseable output
         run: echo ${{ steps.reusecall.outputs.sha-short }}
