@@ -7,13 +7,4 @@ on:
 
 jobs:
   call_reusable:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Call reusable workflow
-        uses: ./.github/workflows/sha-short.yml
-
-      - name: Reusable output
-        run: echo ${{ steps.sha_short.outputs.sha_short }}
+    uses: ./.github/workflows/sha-short.yml
