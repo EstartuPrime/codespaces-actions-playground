@@ -8,11 +8,11 @@ name: (release-candidate) Build a release candidate
 
 on:
   pull_request:
-    branches: 
-      - release/**
-      - releases/**
-    types:
+    types: 
       - closed
+    branches: 
+      - 'release/**'
+      - 'releases/**'
 
 env:
   SOME_ENV: 1
