@@ -37,4 +37,4 @@ This section is only to get some changes we have to fix in release 1.0.0 and bui
 
 ## we are close
 
-to a working workflow as i expect. the action was not updated? maybe we have to update it in the release branch??
+to a working workflow as i expect. Now the action is updated from main.
