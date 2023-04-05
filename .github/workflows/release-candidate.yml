@@ -33,7 +33,7 @@ jobs:
         id: define-version
         run: |
           echo "test: ${{ steps.parse-version.outputs.parsed_version }}"
-          echo "rc_version=$(if[ -z '${{ steps.parse-version.outputs.parsed_version }}' ]; then echo '0.0.0'; else echo ${{ steps.parse-version.outputs.parsed_version }}; fi )" >> $GITHUB_OUTPUT
+          echo "rc_version=$(if [ -z '${{ steps.parse-version.outputs.parsed_version }}' ]; then echo '0.0.0'; else echo ${{ steps.parse-version.outputs.parsed_version }}; fi )" >> $GITHUB_OUTPUT
       - name: Extract RC-Value
         id: parse-value
         run: |
@@ -42,7 +42,7 @@ jobs:
         id: define-rcvalue
         run: |
           echo "test: ${{ steps.parse-value.outputs.parsed_value }}"
-          echo "rc_value=$(if[ -z '${{ steps.parse-value.outputs.parsed_value }}' ]; then echo 'rc0'; else echo ${{ steps.parse-value.outputs.parsed_value }}; fi )" >> $GITHUB_OUTPUT
+          echo "rc_value=$(if [ -z '${{ steps.parse-value.outputs.parsed_value }}' ]; then echo 'rc0'; else echo ${{ steps.parse-value.outputs.parsed_value }}; fi )" >> $GITHUB_OUTPUT
 
       - name: Final Test
         run: |
