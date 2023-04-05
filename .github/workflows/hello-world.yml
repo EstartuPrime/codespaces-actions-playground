@@ -52,3 +52,11 @@ jobs:
 
   call_reusable:
     uses: ./.github/workflows/sha-short.yml
+
+  test_reusable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: compare sha
+        run: |
+          echo "reusable sha-short: " ${{ needs.call_reusable.outputs.sha-short }}
+          echo "from env: " ${{ env.sha_short }}
