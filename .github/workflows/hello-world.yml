@@ -50,18 +50,18 @@ jobs:
           echo "in out: ${{ steps.sha-short.outputs.sha_short }}"
           echo "in env: ${{ env.sha_short }}"
 
-  call_reusable:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out the repo
-        id: checkout
-        uses: actions/checkout@v3
-      - name: test checkout
-        run: echo $(ls -la ./.github/workflows)
-
-      - name: reusable call
-        id: reusecall
-        uses: ${{ github.repository }}/.github/workflows/reusable-workflow.yml@main
-
-      - name: reuseable output
-        run: echo ${{ steps.reusecall.outputs.sha-short }}
+#  call_reusable:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out the repo
+#        id: checkout
+#        uses: actions/checkout@v3
+#      - name: test checkout
+#        run: echo $(ls -la ./.github/workflows)
+#
+#      - name: reusable call
+#        id: reusecall
+#        uses: ${{ github.repository }}/.github/workflows/reusable-workflow.yml@main
+#
+#      - name: reuseable output
+#        run: echo ${{ steps.reusecall.outputs.sha-short }}
