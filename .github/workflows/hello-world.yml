@@ -55,9 +55,11 @@ jobs:
 
   test_reusable:
     runs-on: ubuntu-latest
-    needs: call_reusable
+    needs: 
+      - hello-world
+      - call_reusable
     steps:
       - name: compare sha
         run: |
           echo "reusable sha-short: " ${{ needs.call_reusable.outputs.sha-short }}
-          echo "from env: " ${{ env.sha_short }}
+          echo "from env: " ${{ needs.hello-world.steps.sha-short.sha_short }}
