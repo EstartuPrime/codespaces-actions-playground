@@ -23,6 +23,9 @@ env:
 jobs:
   hello-world:
     runs-on: ubuntu-latest
+    outputs:
+      sha-short: ${{ steps.sha-short.sha_short }}
+
     steps:
       - name: Hello world
         run: |
@@ -62,4 +65,4 @@ jobs:
       - name: compare sha
         run: |
           echo "reusable sha-short: " ${{ needs.call_reusable.outputs.sha-short }}
-          echo "from env: " ${{ needs.hello-world.steps.sha-short.sha_short }}
+          echo "from env: " ${{ needs.hello-world.outputs.sha-short }}
