@@ -1,0 +1,45 @@
+# for this workflow we have to define some rules about PR on release-branches:
+# 1. The name of the release-branch must be "release" or "releases" 
+#    and the format is: release/[version].
+#    e.g. "release/4.24.0" or "release/04.24.00" or "releases/4.24.0"
+# 2. The title of the PR must contain the release candidate value like "rc1" (case insensitive)!
+
+name: (release-candidate) Build a release candidate
+
+on:
+  pull_request:
+    branches: 
+      - release/**
+      - releases/**
+    types:
+      - closed
+
+env:
+  SOME_ENV: 1
+  ANOTHER_ENV: Hi
+  RC_VERSION: 0.0.0
+  RC_VALUE: rc0
+
+jobs:
+  push_to_registry:
+    name: build and push after merge
+    # only run if the PR is merged!
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract Version
+        id: rcversion
+        run: |
+          echo "rc_version=$(echo ${{ github.ref_name }} | grep -Eo '[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}'" >> $GITHUB_OUTPUT
+      - name: Test Version
+        run: |
+          echo "test: ${{ steps.rcversion.outputs.rc_version }}"
+          echo "RC_VERSION=$([ -z '${{ steps.rcversion.outputs.rc_version }}' ] && echo ${{ steps.rcversion.outputs.rc_version }} )" >> $GITHUB_ENV
+      - name: Extract RC-Value
+        id: rcvalue
+        run: |
+          echo "rc_value=$(echo ${{ github.event.pull_request.title }} | grep -Eio 'RC[0-9]*')" >> $GITHUB_OUTPUT
+      - name: Test RC-Value
+        run: |
+          echo "test: ${{ steps.rcvalue.outputs.rc_value }}"
+          echo "RC_VALUE=$([ -z '${{ steps.rcvalue.outputs.rc_value }}' ] && echo ${{ steps.rcversion.outputs.rc_value }} )" >> $GITHUB_ENV
