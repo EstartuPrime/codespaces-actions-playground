@@ -12,7 +12,7 @@ jobs:
     name: Generate the short SHA
     runs-on: ubuntu-latest
     outputs:
-      sha-short: ${{ steps.first.sha-short }}
+      sha-short: ${{ steps.first.outputs.sha-short }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
