@@ -41,4 +41,4 @@ To a working workflow as i expect. It works! (when the needs are fullfilled).
 
 ## now check the parsed values
 
-Good case. For rc4.
+Good case. bad case without rc in the branch and merge name.
