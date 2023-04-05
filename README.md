@@ -34,3 +34,7 @@ If you need to delete the codespace, you can do this at [https://github.com/code
 ## we need some changes
 
 This section is only to get some changes we have to fix in release 1.0.0 and build an release-candidate (trigger the workflow).
+
+## we are close
+
+to a working workflow as i expect.
