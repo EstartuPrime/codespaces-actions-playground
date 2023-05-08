@@ -1,7 +1,10 @@
 # from: https://docs.github.com/de/actions/using-workflows/storing-workflow-data-as-artifacts
 name: Share data between jobs
 
-on: [push]
+on: 
+  push:
+    branches:
+      - "share_artifacts/**"
 
 jobs:
   job_1:
