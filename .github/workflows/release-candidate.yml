@@ -17,29 +17,42 @@ on:
 env:
   SOME_ENV: 1
   ANOTHER_ENV: Hi
-  RC_VERSION: 0.0.0
-  RC_VALUE: rc0
 
 jobs:
-  push_to_registry:
-    name: build and push after merge
+  extract_metadata:
+    name: extract metadata for release-candidate
     # only run if the PR is merged!
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    outputs:
+        rc_version: ${{ steps.define-version.outputs.rc_version }}
+        rc_value: ${{ steps.define-rcvalue.outputs.rc_value }}
+
     steps:
       - name: Extract Version
-        id: rcversion
+        id: parse-version
         run: |
-          echo "rc_version=$(echo ${{ github.ref_name }} | grep -Eo '[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}')" >> $GITHUB_OUTPUT
+          echo "parsed_version=$(echo ${{ github.ref_name }} | grep -Eo '[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{1,2}')" >> $GITHUB_OUTPUT
       - name: Test Version
+        id: define-version
         run: |
-          echo "test: ${{ steps.rcversion.outputs.rc_version }}"
-          echo "RC_VERSION=$([ -z '${{ steps.rcversion.outputs.rc_version }}' ] && echo ${{ steps.rcversion.outputs.rc_version }} )" >> $GITHUB_ENV
+          echo "test: ${{ steps.parse-version.outputs.parsed_version }}"
+          echo "rc_version=$(if [ -z '${{ steps.parse-version.outputs.parsed_version }}' ]; then echo '0.0.0'; else echo ${{ steps.parse-version.outputs.parsed_version }}; fi )" >> $GITHUB_OUTPUT
       - name: Extract RC-Value
-        id: rcvalue
+        id: parse-value
         run: |
-          echo "rc_value=$(echo ${{ github.event.pull_request.title }} | grep -Eio 'RC[0-9]*')" >> $GITHUB_OUTPUT
+          echo "parsed_value=$(echo ${{ github.event.pull_request.title }} | grep -Eio 'RC[0-9]*')" >> $GITHUB_OUTPUT
       - name: Test RC-Value
+        id: define-rcvalue
         run: |
-          echo "test: ${{ steps.rcvalue.outputs.rc_value }}"
-          echo "RC_VALUE=$([ -z '${{ steps.rcvalue.outputs.rc_value }}' ] && echo ${{ steps.rcversion.outputs.rc_value }} )" >> $GITHUB_ENV
+          echo "test: ${{ steps.parse-value.outputs.parsed_value }}"
+          echo "rc_value=$(if [ -z '${{ steps.parse-value.outputs.parsed_value }}' ]; then echo 'rc0'; else echo ${{ steps.parse-value.outputs.parsed_value }}; fi )" >> $GITHUB_OUTPUT
+
+  final_test:
+    name: final test of extract_metadata outputs
+    runs-on: ubuntu-latest
+    needs: extract_metadata
+    steps:
+      - name: Final Test
+        run: |
+          echo "the final version can looks like this: ${{ needs.extract_metadata.outputs.rc_version }}-${{ needs.extract_metadata.outputs.rc_value }}"
