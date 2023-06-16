@@ -1,4 +1,4 @@
-name: SHA-short creator
+name: short SHA generator
 
 on:
   workflow_call:
@@ -9,17 +9,17 @@ on:
         required: false
         default: 7
     outputs:
-      sha-short:
-        description: "The first 8 characters of github.sha"
-        value: ${{ jobs.sha-short.outputs.output1 }}
+      short-sha:
+        description: "Shorten github.sha to the first 7 characters"
+        value: ${{ jobs.shorten.outputs.short-sha }}
 
 jobs:
-  sha-short:
+  shorten:
     name: Generate the short SHA
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.first.outputs.sha-short }}
+      short-sha: ${{ steps.first.outputs.short-sha }}
     steps:
       - id: first
         run: |
-          echo "sha-short=$(echo ${{ github.sha }} | cut -c1-${{ github.event.inputs.sha-length }})" >> $GITHUB_OUTPUT
+          echo "short-sha=$(echo ${{ github.sha }} | cut -c1-${{ github.event.inputs.sha-length }})" >> $GITHUB_OUTPUT
