@@ -15,4 +15,4 @@ jobs:
     steps:
       - id: result
         run: |
-          echo "sha-short result: ${{ needs.call_reusable.outputs.sha-short }}"
+          echo "sha-short result: ${{ needs.call_reusable.outputs.short-sha }}"
