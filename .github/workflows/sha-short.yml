@@ -22,4 +22,4 @@ jobs:
     steps:
       - id: first
         run: |
-          echo "short-sha=$(echo ${{ github.sha }} | cut -c1-${{ github.event.inputs.sha-length }})" >> $GITHUB_OUTPUT
+          echo "short-sha=$(echo ${{ github.sha }} | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
