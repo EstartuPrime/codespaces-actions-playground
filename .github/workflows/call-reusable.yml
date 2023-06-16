@@ -1,6 +1,7 @@
 name: Call Reusable Workflow
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -8,3 +9,10 @@ on:
 jobs:
   call_reusable:
     uses: ./.github/workflows/sha-short.yml
+  test_output:
+    needs: call_reusable
+    runs-on: ubuntu-latest
+    steps:
+      - id: result
+        run: |
+          echo "sha-short result: ${{ needs.call_reusable.outputs.sha-short }}"

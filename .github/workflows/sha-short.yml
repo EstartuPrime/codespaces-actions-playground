@@ -2,6 +2,12 @@ name: SHA-short creator
 
 on:
   workflow_call:
+    inputs:
+      sha-length:
+        description: "length of the shortened sha, default 7"
+        type: number
+        required: false
+        default: 7
     outputs:
       sha-short:
         description: "The first 8 characters of github.sha"
