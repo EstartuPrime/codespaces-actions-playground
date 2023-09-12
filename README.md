@@ -44,6 +44,14 @@ To a working workflow as i expect. It works! (when the needs are fullfilled).
 Good case works.
 Bad case without rc in the branch and merge name also works
 
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
+
 ## final test with two jobs
 
 We have to check if the second job doesnt start when the if statement of the first job doesnt fit.
