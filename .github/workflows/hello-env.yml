@@ -1,0 +1,38 @@
+name: Hello world
+
+on:
+  workflow_dispatch:
+
+env:
+  SOME_ENV: 1
+  ANOTHER_ENV: Hi
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    env:
+      success: 0
+    steps:
+      - name: Hello world
+        run: |
+          echo "Hello world - success is ${{ env.success }}"
+
+      - name: Update success
+        id: set-success
+        run: |
+          echo "success=1" >> $GITHUB_ENV
+
+      - name: Show success
+        id: show-success
+        run: |
+          echo "Hellooo success ${{ env.success }}"
+
+      - name: overwrite SOME_ENV
+        id: ovwrt-someenv
+        run: |
+          echo "SOME_ENV=11" >> $GITHUB_ENV
+
+      - name: Show someenv
+        id: show-someenv
+        run: |
+          echo "Hellooo some_env ${{ env.SOME_ENV }}"
