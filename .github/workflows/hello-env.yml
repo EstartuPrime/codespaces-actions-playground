@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       success: 0
+    outputs:
+      success-out: 0
     steps:
       - name: Hello world
         run: |
@@ -38,10 +40,14 @@ jobs:
         run: |
           echo "Hellooo GLOBAL_ENV ${{ env.GLOBAL_ENV }}"
 
+      - name: Set output
+        id: set-out
+        run: echo "success-out=${{ env.GLOBAL_ENV }}" >> $GITHUB_OUTPUT
+
   hello-env-2:
-    if: env.GLOBAL_ENV > 0
     needs: hello-world
+    if: needs.outputs.success-out > 0
     runs-on: ubuntu-latest
     steps:
       - name: last step
-        run: echo "Last step got the value ${{ env.GLOBAL_ENV }}"
+        run: echo "Last step got the value ${{ needs.outputs.success-out }}"
