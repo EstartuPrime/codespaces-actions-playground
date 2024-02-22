@@ -41,6 +41,7 @@ jobs:
   hello-env-2:
     if: env.GLOBAL_ENV > 0
     needs: hello-world
+    runs-on: ubuntu-latest
     steps:
       - name: last step
         run: echo "Last step got the value ${{ env.GLOBAL_ENV }}"
