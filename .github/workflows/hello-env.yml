@@ -24,7 +24,7 @@ jobs:
       - name: Hello world
         run: |
           echo "Hello world - success is ${{ env.success }}"
-          echo "${{ github.event.push }}"
+          echo "${{ github.event_name }}"
 
       - name: Update success
         id: set-success
