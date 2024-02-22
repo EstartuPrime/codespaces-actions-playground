@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  GLOBAL_ENV: 1
+  GLOBAL_ENV: 0
   ANOTHER_ENV: Hi
 
 jobs:
@@ -33,6 +33,7 @@ jobs:
           echo "GLOBAL_ENV=11" >> $GITHUB_ENV
 
       - name: Show globalenv
+        if: env.GLOBAL_ENV > 0
         id: show-globalenv
         run: |
-          echo "Hellooo GLOBAL_ENV ${{ github.env.GLOBAL_ENV }}"
+          echo "Hellooo GLOBAL_ENV ${{ env.GLOBAL_ENV }}"
