@@ -37,3 +37,10 @@ jobs:
         id: show-globalenv
         run: |
           echo "Hellooo GLOBAL_ENV ${{ env.GLOBAL_ENV }}"
+
+  hello-env-2:
+    if: env.GLOBAL_ENV > 0
+    needs: hello-world
+    steps:
+      - name: last step
+        run: echo "Last step got the value ${{ env.GLOBAL_ENV }}"
