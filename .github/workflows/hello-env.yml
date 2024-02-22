@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  SOME_ENV: 1
+  GLOBAL_ENV: 1
   ANOTHER_ENV: Hi
 
 jobs:
@@ -27,12 +27,12 @@ jobs:
         run: |
           echo "Hellooo success ${{ env.success }}"
 
-      - name: overwrite SOME_ENV
-        id: ovwrt-someenv
+      - name: overwrite GLOBAL_ENV
+        id: ovwrt-globalenv
         run: |
-          echo "SOME_ENV=11" >> $GITHUB_ENV
+          echo "GLOBAL_ENV=11" >> $GITHUB_ENV
 
-      - name: Show someenv
-        id: show-someenv
+      - name: Show globalenv
+        id: show-globalenv
         run: |
-          echo "Hellooo some_env ${{ env.SOME_ENV }}"
+          echo "Hellooo GLOBAL_ENV ${{ github.env.GLOBAL_ENV }}"
