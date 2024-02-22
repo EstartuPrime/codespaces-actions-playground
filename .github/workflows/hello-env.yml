@@ -13,7 +13,7 @@ jobs:
     env:
       success: 0
     outputs:
-      successout: 0
+      successout: ${{ steps.set-out.outputs.successout }}
     steps:
       - name: Hello world
         run: |
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: last step
-        run: echo "Last step got the value ${{ needs.outputs.successout }}"
+        run: echo "Last step got the value ${{ needs.hello-world.outputs.successout }}"
 
   hello-env-3:
     needs: hello-world
