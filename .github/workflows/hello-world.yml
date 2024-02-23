@@ -25,7 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       sha-short: ${{ steps.sha-short.outputs.sha_short }}
-
+    env:
+      image-suffix: ''
+      sha_short: ''
     steps:
       - name: Hello world
         run: |
