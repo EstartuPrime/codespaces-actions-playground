@@ -17,7 +17,32 @@ on:
         description: "Shorten github.sha to the first 7 characters"
         value: ${{ jobs.shorten.outputs.short-sha }}
 
+env:
+  SHA2SHORTEN: ""
+
 jobs:
+  specific-branch:
+    if: ! -z ${{ inputs.branch }}
+    name: Checkout repo to get branch specific SHA
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
+      - name: test
+        run: |
+          echo "SHA2SHORTEN=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})" >> $GITHUB_ENV
+
+  current-branch:
+    if: -z ${{ inputs.branch }}
+    name: Get the SHA from current Branch/Context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set global ENV with current SHA
+        run: |
+          echo "SHA2SHORTEN=${{ github.sha }}" >> $GITHUB_ENV
+
   shorten:
     name: Generate the short SHA
     runs-on: ubuntu-latest
@@ -26,11 +51,4 @@ jobs:
     steps:
       - id: first
         run: |
-          if [ ! -z ${{ inputs.branch }} ]; then
-            sha2shorten=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})
-            echo "sha of branch ${{ inputs.branch }} is: $sha2shorten"
-          else
-            sha2shorten=${{ github.sha }}
-            echo "sha of current branch is: $sha2shorten"
-          fi
-          echo "short-sha=$(echo $sha2shorten | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
+          echo "short-sha=$(echo ${{ env.SHA2SHORTEN }} | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
