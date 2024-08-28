@@ -27,8 +27,10 @@ jobs:
       - id: first
         run: |
           if [ ! -z ${{ inputs.branch }} ]; then
-            sha2shorten=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})"
+            sha2shorten=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})
+            echo "sha of branch ${{ inputs.branch }} is: $sha2shorten"
           else
-            sha2shorten=$(echo ${{ github.sha }} | cut -c1-${{ inputs.sha-length }})"
+            sha2shorten=${{ github.sha }}
+            echo "sha of current branch is: $sha2shorten"
           fi
-          echo "short-sha=$sha2shorten" >> $GITHUB_OUTPUT
+          echo "short-sha=$(echo $sha2shorten | cut -c1-${{ inputs.sha-length }}) >> $GITHUB_OUTPUT
