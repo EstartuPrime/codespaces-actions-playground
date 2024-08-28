@@ -3,6 +3,10 @@ name: Call Reusable Workflow
 on:
   workflow_dispatch:
     inputs:
+      result-length:
+        description: the length of the result
+        type: number
+        default: 7
       branch-name:
         description: Enter a branch name
         type: string
@@ -15,7 +19,7 @@ jobs:
   call_reusable:
     uses: ./.github/workflows/sha-short.yml
     with:
-      sha-length: 8
+      sha-length: ${{ inputs.result-length }}
       branch: ${{ inputs.branch-name }}
   test_output:
     needs: call_reusable
