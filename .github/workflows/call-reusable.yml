@@ -2,6 +2,14 @@ name: Call Reusable Workflow
 
 on:
   workflow_dispatch:
+    inputs:
+      branch-name:
+        description: choose a branch name
+        type: choice
+        options:
+          - main
+          - develop
+        default: main
   push:
     branches:
       - main
@@ -9,6 +17,9 @@ on:
 jobs:
   call_reusable:
     uses: ./.github/workflows/sha-short.yml
+    with:
+      sha-length: 8
+      branch: main
   test_output:
     needs: call_reusable
     runs-on: ubuntu-latest
