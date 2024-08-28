@@ -8,6 +8,10 @@ on:
         type: number
         required: false
         default: 7
+      branch:
+        description: "Optional branch name, needed for scheduled workflows they usally start from main branch but probably builds another branch"
+        type: string
+        required: false
     outputs:
       short-sha:
         description: "Shorten github.sha to the first 7 characters"
@@ -22,4 +26,9 @@ jobs:
     steps:
       - id: first
         run: |
-          echo "short-sha=$(echo ${{ github.sha }} | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
+          if [ ! -z ${{ inputs.branch }} ]; then
+            sha2shorten=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})"
+          else
+            sha2shorten=$(echo ${{ github.sha }} | cut -c1-${{ inputs.sha-length }})"
+          fi
+          echo "short-sha=$sha2shorten" >> $GITHUB_OUTPUT
