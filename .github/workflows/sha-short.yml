@@ -22,14 +22,15 @@ jobs:
     name: Generate the short SHA
     runs-on: ubuntu-latest
     outputs:
-      short-sha: ${{ steps.first.outputs.short-sha }}
+      short-sha: ${{ steps.shorten.outputs.short-sha }}
     steps:
-      - name: checkout repo
+      - name: Checkout Repo
         id: first
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.branch }}
-      - id: second
+      - id: shorten
+        name:  Shorten the SHA Hash
         run: |
           echo "$(git log -n 1 --pretty=format:"%H" | cut -c1-${{ inputs.sha-length }})"
           echo "short-sha=$(git log -n 1 --pretty=format:"%H" | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
