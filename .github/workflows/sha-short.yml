@@ -33,4 +33,4 @@ jobs:
             sha2shorten=${{ github.sha }}
             echo "sha of current branch is: $sha2shorten"
           fi
-          echo "short-sha=$(echo $sha2shorten | cut -c1-${{ inputs.sha-length }}) >> $GITHUB_OUTPUT
+          echo "short-sha=$(echo $sha2shorten | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
