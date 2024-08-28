@@ -12,6 +12,7 @@ on:
         description: "Optional branch name, needed for scheduled workflows they usally start from main branch but probably builds another branch"
         type: string
         required: false
+        default: current
     outputs:
       short-sha:
         description: "Shorten github.sha to the first 7 characters"
@@ -22,7 +23,7 @@ env:
 
 jobs:
   specific-branch:
-    if: ${{ inputs.branch != "" }}
+    if: ${{ inputs.branch != 'current' }}
     name: Checkout repo to get branch specific SHA
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +36,7 @@ jobs:
           echo "SHA2SHORTEN=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})" >> $GITHUB_ENV
 
   current-branch:
-    if: ${{ inputs.branch == "" }}
+    if: ${{ inputs.branch == 'current' }}
     name: Get the SHA from current Branch/Context
     runs-on: ubuntu-latest
     steps:
