@@ -6,6 +6,7 @@ on:
       result-length:
         description: the length of the result
         type: number
+        required: false
         default: 7
       branch-name:
         description: Enter a branch name
@@ -19,8 +20,8 @@ jobs:
   call_reusable:
     uses: ./.github/workflows/sha-short.yml
     with:
-      sha-length: ${{ inputs.result-length }}
-      branch: ${{ inputs.branch-name }}
+      sha-length: inputs.result-length
+      branch: inputs.branch-name
   test_output:
     needs: call_reusable
     runs-on: ubuntu-latest
