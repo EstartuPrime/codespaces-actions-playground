@@ -4,12 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       branch-name:
-        description: choose a branch name
-        type: choice
-        options:
-          - main
-          - develop
-        default: main
+        description: Enter a branch name
+        type: string
   push:
     branches:
       - main
