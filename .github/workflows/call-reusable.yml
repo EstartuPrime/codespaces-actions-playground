@@ -20,8 +20,8 @@ jobs:
   call_reusable:
     uses: ./.github/workflows/sha-short.yml
     with:
-      sha-length: inputs.result-length
-      branch: inputs.branch-name
+      sha-length: ${{ inputs.result-length }}
+      branch: ${{ inputs.branch-name }}
   test_output:
     needs: call_reusable
     runs-on: ubuntu-latest
