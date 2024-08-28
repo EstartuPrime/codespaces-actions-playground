@@ -22,7 +22,7 @@ env:
 
 jobs:
   specific-branch:
-    if: ! -z ${{ inputs.branch }}
+    if: ${{ inputs.branch != "" }}
     name: Checkout repo to get branch specific SHA
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +35,7 @@ jobs:
           echo "SHA2SHORTEN=$(git log -n 1 --pretty=format:"%H" ${{inputs.branch}})" >> $GITHUB_ENV
 
   current-branch:
-    if: -z ${{ inputs.branch }}
+    if: ${{ inputs.branch == "" }}
     name: Get the SHA from current Branch/Context
     runs-on: ubuntu-latest
     steps:
