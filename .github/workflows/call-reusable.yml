@@ -6,6 +6,7 @@ on:
       branch-name:
         description: Enter a branch name
         type: string
+        required: false
   push:
     branches:
       - main
