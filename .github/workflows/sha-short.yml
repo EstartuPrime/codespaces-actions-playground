@@ -17,9 +17,6 @@ on:
         description: "Shorten github.sha to the first 7 characters"
         value: ${{ jobs.shorten.outputs.short-sha }}
 
-env:
-  SHA2SHORTEN: ""
-
 jobs:
   shorten:
     name: Generate the short SHA
@@ -34,4 +31,5 @@ jobs:
           ref: ${{ inputs.branch }}
       - id: second
         run: |
+          echo "$(git log -n 1 --pretty=format:"%H" | cut -c1-${{ inputs.sha-length }})"
           echo "short-sha=$(git log -n 1 --pretty=format:"%H" | cut -c1-${{ inputs.sha-length }})" >> $GITHUB_OUTPUT
