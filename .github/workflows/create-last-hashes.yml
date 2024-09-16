@@ -7,7 +7,7 @@ on:
 
 
 env:
-  OUT_FILENAME: "REUSABLE_LATEST_VERSIONS.md"
+  OUT_FILENAME: "REUSABLE_WORKFLOW_VERSIONS.md"
 
 jobs:
   create-readme:
@@ -19,18 +19,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Create File
-      #   run: |
-      #     printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
-      #     printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
-      #     printf "| :-- | :-- | :-- |\n" >> ${{ env.OUT_FILENAME }}
-      #     for rev in $(ls .github/workflows -I create-last-hashes.yml -I create-readme.yml ); do
-      #       hash=$(cd .github/workflows && git rev-list --all --max-count=1 $rev)
-      #       printf "| $rev | $hash | ${{ github.repository }}/.github/workflows/$rev@$hash |\n" >> ${{ env.OUT_FILENAME }}
-      #     done
-
-      - name: Call Helper
-        run: bash src/create-hash-helper.sh ${{ env.OUT_FILENAME }}
+      - name: Create File
+        run: |
+          printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
+          printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
+          printf "| :-- | :-- | :-- |\n" >> ${{ env.OUT_FILENAME }}
+          for rev in $(ls .github/workflows -I create-last-hashes.yml -I create-readme.yml ); do
+            hash=$(git rev-list --all --max-count=1 .github/workflows/$rev)
+            printf "| $rev | $hash | ${{ github.repository }}/.github/workflows/$rev@$hash |\n" >> ${{ env.OUT_FILENAME }}
+          done
 
       - name: Show File
         run: cat ${{ env.OUT_FILENAME }}
@@ -44,10 +41,10 @@ jobs:
   
       - name: Setup Git & Commit
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
+          git config --global user.name 'GitHub Actions [bot]'
+          git config --global user.email 'github-actions[bot]@github.com'
           git add .
-          git commit -m "Automatischer Commit durch GitHub Actions"
+          git commit -m "Update Workflow Versions" || echo "No changes to commit"
 
       - name: Push changes
         env:
