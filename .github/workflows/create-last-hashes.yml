@@ -11,6 +11,10 @@ env:
 
 jobs:
   create-readme:
+    permissions: 
+      actions: write
+      contents: write
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -42,6 +46,6 @@ jobs:
 
       - name: Push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.PUSH_TO_REPO }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git push origin main
