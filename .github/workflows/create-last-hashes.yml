@@ -17,15 +17,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create File
-        run: |
-          printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
-          printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
-          printf "| :-- | :-- | :-- |\n" >> ${{ env.OUT_FILENAME }}
-          for rev in $(ls .github/workflows -I create-last-hashes.yml -I create-readme.yml ); do
-            hash=$(cd .github/workflows && git rev-list --all --max-count=1 $rev)
-            printf "| $rev | $hash | ${{ github.repository }}/.github/workflows/$rev@$hash |\n" >> ${{ env.OUT_FILENAME }}
-          done
+      # - name: Create File
+      #   run: |
+      #     printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
+      #     printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
+      #     printf "| :-- | :-- | :-- |\n" >> ${{ env.OUT_FILENAME }}
+      #     for rev in $(ls .github/workflows -I create-last-hashes.yml -I create-readme.yml ); do
+      #       hash=$(cd .github/workflows && git rev-list --all --max-count=1 $rev)
+      #       printf "| $rev | $hash | ${{ github.repository }}/.github/workflows/$rev@$hash |\n" >> ${{ env.OUT_FILENAME }}
+      #     done
+
+      - name: Call Helper
+        run: bash src/create-hash-helper.sh ${{ env.OUT_FILENAME }}
 
       - name: Show File
         run: cat ${{ env.OUT_FILENAME }}
