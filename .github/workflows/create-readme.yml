@@ -3,8 +3,7 @@ name: Create Versions/Hash Readme
 on:
   push:
     branches:
-      - main
-      - develop
+      - deactivated
 
 jobs:
   create-readme:
