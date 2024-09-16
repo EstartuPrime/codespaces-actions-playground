@@ -22,10 +22,13 @@ jobs:
           printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
           printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
           printf "| :-- | :-- | :-- |\n" >> ${{ env.OUT_FILENAME }}
-          for rev in $(ls .github/workflows -I create-readme.yml ); do
-            hash=$(git rev-list --all --max-count=1 .github/workflows/$rev)
-            printf "| $rev | $hash | ${{ github.repository }}/.github/workflows/$ref@$hash |\n" >> ${{ env.OUT_FILENAME }}
+          for rev in $(ls .github/workflows -I create-last-hashes.yml -I create-readme.yml ); do
+            hash=$(cd .github/workflows && git rev-list --all --max-count=1 $rev)
+            printf "| $rev | $hash | ${{ github.repository }}/.github/workflows/$rev@$hash |\n" >> ${{ env.OUT_FILENAME }}
           done
+
+      - name: Show File
+        run: cat ${{ env.OUT_FILENAME }}
 
       - name: Upload result
         uses: actions/upload-artifact@v4
