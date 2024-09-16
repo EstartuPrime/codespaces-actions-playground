@@ -1,4 +1,4 @@
-name: Create Versions/Hash Readme
+name: Create Workflow Latest Hash Readme
 
 on:
   push:
