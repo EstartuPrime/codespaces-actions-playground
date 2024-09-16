@@ -42,5 +42,5 @@ jobs:
 
       - name: Push Changes
         env:
-          GH_TOKEN: ${{ secrets.PUSH_TO_REPO }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: git push origin main
