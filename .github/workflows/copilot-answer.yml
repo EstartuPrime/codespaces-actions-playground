@@ -7,7 +7,7 @@ on:
 
 
 env:
-    OUT_FILENAME: "VERSIONS_README.md"
+    OUT_FILENAME: "REUSABLE_LATEST_VERSIONS.md"
 
 jobs:
   commit-and-push:
@@ -20,10 +20,10 @@ jobs:
         run: |
           printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
           printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
-          printf "| :-- | :-- | :-- |\n" >> README.md
-          for rev in $(ls .github/workflows -I README.md -I create-readme.yml ); do
-            hash=$(git rev-list --all --max-count=1 $rev)
-            printf "| .github/workflows/$rev | $hash | felamanagementag/fela-tools/.github/workflows/$ref@$hash |\n" >> ${{ env.OUT_FILENAME }}
+          printf "| :-- | :-- | :-- |\n" >> ${{ env.OUT_FILENAME }}
+          for rev in $(ls .github/workflows -I create-readme.yml ); do
+            hash=$(git rev-list --all --max-count=1 .github/workflows/$rev)
+            printf "| $rev | $hash | felamanagementag/fela-tools/.github/workflows/$ref@$hash |\n" >> ${{ env.OUT_FILENAME }}
           done
 
       - name: Commit changes
