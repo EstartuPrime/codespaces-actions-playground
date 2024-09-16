@@ -21,9 +21,9 @@ jobs:
           printf "# Latest Versions \n" > ${{ env.OUT_FILENAME }}
           printf "| Workflow | Hash | Full Path |\n" >> ${{ env.OUT_FILENAME }}
           printf "| :-- | :-- | :-- |\n" >> README.md
-          for rev in $(ls ./.github/workflows -I README.md -I create-readme.yml ); do
+          for rev in $(ls .github/workflows -I README.md -I create-readme.yml ); do
             hash=$(git rev-list --all --max-count=1 $rev)
-            printf "| $rev | $hash | felamanagementag/fela-tools/.github/workflows/$ref@$hash |\n" >> ${{ env.OUT_FILENAME }}
+            printf "| .github/workflows/$rev | $hash | felamanagementag/fela-tools/.github/workflows/$ref@$hash |\n" >> ${{ env.OUT_FILENAME }}
           done
 
       - name: Commit changes
