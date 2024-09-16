@@ -9,8 +9,6 @@ on:
 jobs:
   create-readme:
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
 
     steps:
       - name: Checkout
@@ -36,7 +34,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
           git add --all
           git commit -m "Update Workflow Versions" || echo "No changes to commit"
           git push
