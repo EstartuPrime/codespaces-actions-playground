@@ -17,6 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          # fetch-depth 0 is important to get the full history, and so we get the real last commit hash, otherwise all are at the same.
           fetch-depth: 0
 
       - name: Create File
@@ -31,13 +32,6 @@ jobs:
 
       - name: Show File
         run: cat ${{ env.OUT_FILENAME }}
-
-      - name: Upload result
-        uses: actions/upload-artifact@v4
-        with:
-          name: Workflow-Version-Overview
-          path: ${{ env.OUT_FILENAME }}
-  
   
       - name: Setup Git & Commit
         run: |
