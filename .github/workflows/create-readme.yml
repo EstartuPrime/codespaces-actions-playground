@@ -1,0 +1,26 @@
+name: Create Versions/Hash Readme
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  create-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create
+        run: |
+          cd .github/workflows
+          printf "# Latest Versions \n" > README.md
+          printf "| Workflow | Hash |\n" >> README.md
+          for rev in $(ls . -I README.md -I create-readme.yml ); do
+              hash=$(git rev-list --all --max-count=1 $rev)
+              printf "| $rev | $hash |\n" >> README.md
+          done
