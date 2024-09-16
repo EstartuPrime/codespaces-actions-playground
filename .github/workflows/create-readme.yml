@@ -19,11 +19,11 @@ jobs:
         run: |
           cd .github/workflows
           printf "# Latest Versions \n" > README.md
-          printf "| Workflow | Hash |\n" >> README.md
-          printf "| :-- | :-- |\n" >> README.md
+          printf "| Workflow | Hash | Full Path |\n" >> README.md
+          printf "| :-- | :-- | :-- |\n" >> README.md
           for rev in $(ls . -I README.md -I create-readme.yml ); do
             hash=$(git rev-list --all --max-count=1 $rev)
-            printf "| $rev | $hash |\n" >> README.md
+            printf "| $rev | $hash | felamanagementag/fela-tools/.github/workflows/$ref@$hash |\n" >> README.md
           done
       - name: Upload math result for job 1
         uses: actions/upload-artifact@v4
@@ -32,8 +32,8 @@ jobs:
           path: .github/workflows/README.md
       - name: Commit
         run: |
-          # git config user.email "FELA-Release-Builder@github.com"
-          # git config user.name "FELA-Release-Builder"
+          git config user.email "estartuprime@gmail.com"
+          git config user.name "Alex Felder"
           git add --all
           git commit -m "Update Workflow Versions" || echo "No changes to commit"
           git push
