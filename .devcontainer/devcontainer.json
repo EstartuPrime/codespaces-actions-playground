@@ -7,7 +7,8 @@
         },
         "vscode": {
           "extensions": [
-            "${containerWorkspaceFolder}/.devcontainer/extensions/github-actions-demo-0.0.55.vsix",
+            "mhutchie.git-graph",
+            "github.vscode-github-actions",
             "redhat.vscode-yaml"
           ]
         }
